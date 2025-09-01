@@ -1,5 +1,12 @@
 #!/bin/bash
 
+set -x 
+
+# Install the build tools needed for pyodbc
+echo "Installing build dependencies..."
+apt-get update
+apt-get install -y gcc g++ unixodbc-dev
+
 # Check if a virtual environment exists. If not, create one.
 if [ ! -d "/home/site/wwwroot/venv" ]; then
   echo "Creating virtual environment..."
