@@ -75,8 +75,10 @@ jobs:
         with:
           app-name: 'udacitycms'
           slot-name: 'Production'
+          startup-command: 'bash startup.sh'
 
           
+
 
 
 
