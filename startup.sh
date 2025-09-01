@@ -1,30 +1,15 @@
 #!/bin/bash
+set -x
 
-set -x 
-
-# Install the build tools needed for pyodbc
-echo "Installing build dependencies..."
+# Install system dependencies
 apt-get update
 apt-get install -y gcc g++ unixodbc-dev
 
-# Check if a virtual environment exists. If not, create one.
-if [ ! -d "/home/site/wwwroot/venv" ]; then
-  echo "Creating virtual environment..."
-  python -m venv /home/site/wwwroot/venv
-fi
+# Upgrade pip to avoid old urllib3 bug
+python -m pip install --upgrade pip setuptools wheel
 
-# Activate the virtual environment
-source /home/site/wwwroot/venv/bin/activate
+# Install project dependencies
+python -m pip install -r requirements.txt
 
-# Install dependencies from requirements.txt
-echo "Installing dependencies from requirements.txt..."
-pip install -r requirements.txt
-
-# Add this section to check if the packages were installed successfully
-echo "Checking installed packages..."
-pip show flask_sqlalchemy
-pip show pyodbc
-
-# Start the application using Gunicorn
-echo "Starting Gunicorn..."
+# Start app with Gunicorn
 gunicorn --bind 0.0.0.0:8000 application:app
