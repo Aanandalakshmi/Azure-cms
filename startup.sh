@@ -20,6 +20,11 @@ source /home/site/wwwroot/venv/bin/activate
 echo "Installing dependencies from requirements.txt..."
 pip install -r requirements.txt
 
+# Add this section to check if the packages were installed successfully
+echo "Checking installed packages..."
+pip show flask_sqlalchemy
+pip show pyodbc
+
 # Start the application using Gunicorn
 echo "Starting Gunicorn..."
 gunicorn --bind 0.0.0.0:8000 application:app
